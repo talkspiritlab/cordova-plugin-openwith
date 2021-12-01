@@ -7,13 +7,14 @@ const BUNDLE_SUFFIX = '.shareextension';
 function getPreferences(context, projectName) {
   var configXml = getConfigXml(context);
   var plist = projectPlistJson(context, projectName);
+  var bundleId = getBundleId(configXml);
 
   return [{
     key: '__DISPLAY_NAME__',
     value: getCordovaParameter(configXml, 'DISPLAY_NAME') || projectName
   }, {
     key: '__BUNDLE_IDENTIFIER__',
-    value: getCordovaParameter(configXml, 'IOS_BUNDLE_IDENTIFIER') + BUNDLE_SUFFIX
+    value: bundleId + BUNDLE_SUFFIX
   }, {
     key: '__BUNDLE_SHORT_VERSION_STRING__',
     value: plist.CFBundleShortVersionString
@@ -22,7 +23,7 @@ function getPreferences(context, projectName) {
     value: plist.CFBundleVersion
   }, {
     key: '__URL_SCHEME__',
-    value: getCordovaParameter(configXml, 'IOS_URL_SCHEME')
+    value: bundleId.replace(/\./g, '')
   }];
 }
 
@@ -66,6 +67,16 @@ function getCordovaParameter(configXml, variableName) {
 
 function getPreferenceValue(configXml, name) {
   var value = configXml.match(new RegExp('name="' + name + '" value="(.*?)"', "i"));
+
+  if (value && value[1]) {
+    return value[1];
+  } else {
+    return null;
+  }
+}
+
+function getBundleId(configXml) {
+  var value = configXml.match(new RegExp('id="(.*?)"', 'i'));
 
   if (value && value[1]) {
     return value[1];
