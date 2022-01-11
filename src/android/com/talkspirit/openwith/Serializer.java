@@ -1,4 +1,4 @@
-package com.missiveapp.openwith;
+package com.talkspirit.openwith;
 
 import android.content.ClipData;
 import android.content.ContentResolver;
