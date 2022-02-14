@@ -109,6 +109,7 @@ SOFTWARE.
       <intent-filter>
         <!-- See https://developer.android.com/guide/topics/manifest/data-element.html -->
         <data android:mimeType="application/*" />
+        <data android:mimeType="image/*" />
         <data android:mimeType="text/*" />
         <action android:name="android.intent.action.SEND" />
         <action android:name="android.intent.action.SEND_MULTIPLE" />
